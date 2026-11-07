@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="ug" dir="rtl" data-theme="night">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>ئوتتۇرا كارىدور ۋە ياۋرو-ئاسىيانىڭ يېڭى سىياسىي ئىقتىسادىي ۋەزىيىتى — مۇخلىس تەرجىمە قورالى</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Lateef:wght@400;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* UKIJ Tuz & High-Resolution Uyghur Editorial Font Stack */
+    @font-face {
+      font-family: 'UKIJ Tuz';
+      src: local('UKIJ Tuz Tom'), local('UKIJ Tuz'), local('UKIJ Ekran'), local('UKIJ Basma'), local('Noto Naskh Arabic');
+      font-display: swap;
+    }
+
+    :root, [data-theme="day"] {
+      --bg-canvas: #F9F6F0;
+      --bg-paper: #FFFFFF;
+      --bg-warm-tint: #F3EDE2;
+      --bg-highlight: #FAF6ED;
+      --text-ink: #161412;
+      --text-body: #262320;
+      --text-secondary: #57534E;
+      --text-muted: #78716C;
+      --border-delicate: #E6DEC8;
+      --border-strong: #D5C7A9;
+      --accent-royal: #1B365D;
+      --accent-gold: #8C621E;
+      --accent-emerald: #0F5132;
+      --shadow-elevated: 0 10px 36px -8px rgba(22, 20, 18, 0.06), 0 2px 8px -2px rgba(22, 20, 18, 0.04);
+      --reader-font-size: 19px;
+    }
+
+    [data-theme="night"] {
+      --bg-canvas: #0B0F17;
+      --bg-paper: #121824;
+      --bg-warm-tint: #182030;
+      --bg-highlight: #161F2E;
+      --text-ink: #F8FAFC;
+      --text-body: #E2E8F0;
+      --text-secondary: #94A3B8;
+      --text-muted: #64748B;
+      --border-delicate: #1E293B;
+      --border-strong: #334155;
+      --accent-royal: #60A5FA;
+      --accent-gold: #FBBF24;
+      --accent-emerald: #34D399;
+      --shadow-elevated: 0 14px 40px -10px rgba(0, 0, 0, 0.55);
+      --reader-font-size: 19px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      direction: rtl;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'UKIJ Tuz Tom', 'UKIJ Tuz', 'UKIJ Ekran', 'Noto Naskh Arabic', 'Microsoft Uighur', serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-body);
+      line-height: 2.18;
+      font-size: var(--reader-font-size);
+      transition: background-color 0.25s ease, color 0.25s ease;
+      padding-bottom: 4.5rem;
+    }
+
+    .reading-progress-track {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 3px;
+      background: transparent;
+      z-index: 100;
+    }
+
+    .reading-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-gold), var(--accent-royal));
+      transition: width 0.1s ease-out;
+    }
+
+    /* Requirement 5: Compact Top Bar with Small Day/Night Toggle */
+    .top-utility-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background-color: var(--bg-canvas);
+      border-bottom: 1px solid var(--border-delicate);
+      padding: 0.5rem 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 820px;
+      margin: 0 auto;
+      backdrop-filter: blur(10px);
+    }
+
+    .brand-mark {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .brand-ornament {
+      color: var(--accent-gold);
+      font-size: 0.9rem;
+    }
+
+    .utility-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .font-btn,
+    .theme-toggle-btn {
+      appearance: none;
+      border: 1px solid var(--border-delicate);
+      background: var(--bg-paper);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.76rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.32rem;
+      transition: all 0.15s ease;
+    }
+
+    .font-btn:hover,
+    .theme-toggle-btn:hover {
+      border-color: var(--accent-gold);
+      color: var(--text-ink);
+    }
+
+    /* Requirement 4: Mobile-First Container */
+    .reader-container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 1.25rem 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .reader-container {
+        padding: 2.5rem 2rem;
+      }
+    }
+
+    /* Editorial Masthead */
+    .masthead-card {
+      background: var(--bg-paper);
+      border: 1px solid var(--border-delicate);
+      border-top: 3px solid var(--accent-royal);
+      border-radius: 14px;
+      padding: 1.6rem 1.35rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-elevated);
+      text-align: center;
+    }
+
+    @media (min-width: 640px) {
+      .masthead-card {
+        padding: 2.4rem 2.5rem;
+      }
+    }
+
+    .masthead-kicker {
+      font-size: 0.8rem;
+      color: var(--accent-gold);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .article-title {
+      font-size: clamp(1.45rem, 4.2vw, 2.15rem);
+      font-weight: 700;
+      line-height: 1.72;
+      color: var(--text-ink);
+      margin-bottom: 0.75rem;
+    }
+
+    .original-title {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      direction: ltr;
+      text-align: center;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      padding-top: 0.65rem;
+      border-top: 1px solid var(--border-delicate);
+      max-width: 90%;
+      margin: 0 auto;
+    }
+
+    /* Requirements 1, 2, 3: Literary Uyghur Paragraphs (RTL, Justified, 2em First-Line Indent) */
+    .article-body {
+      background: var(--bg-paper);
+      border: 1px solid var(--border-delicate);
+      border-radius: 14px;
+      padding: 1.5rem 1.25rem;
+      box-shadow: var(--shadow-elevated);
+      margin-bottom: 1.6rem;
+    }
+
+    @media (min-width: 640px) {
+      .article-body {
+        padding: 2.5rem 2.6rem;
+      }
+    }
+
+    .article-body p {
+      direction: rtl;
+      text-align: justify;
+      text-justify: inter-word;
+      text-indent: 2em;
+      margin-bottom: 1.35rem;
+      line-height: 2.22;
+      color: var(--text-body);
+      word-break: normal;
+      overflow-wrap: break-word;
+    }
+
+    .article-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .ornamental-divider {
+      text-align: center;
+      color: var(--accent-gold);
+      font-size: 0.85rem;
+      letter-spacing: 0.4em;
+      margin: 1.5rem 0;
+      opacity: 0.75;
+    }
+
+    .analysis-section {
+      background: var(--bg-paper);
+      border: 1px solid var(--border-delicate);
+      border-radius: 14px;
+      padding: 1.45rem 1.25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-elevated);
+    }
+
+    @media (min-width: 640px) {
+      .analysis-section {
+        padding: 2rem 2.2rem;
+      }
+    }
+
+    .section-heading {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--accent-royal);
+      margin-bottom: 1.1rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border-delicate);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--accent-gold);
+    }
+
+    /* Requirement 7: Single-Paragraph Comprehensive Summary */
+    .summary-paragraph {
+      direction: rtl;
+      text-align: justify;
+      text-justify: inter-word;
+      text-indent: 2em;
+      line-height: 2.2;
+      color: var(--text-ink);
+      background: var(--bg-highlight);
+      padding: 1.35rem 1.4rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-strong);
+    }
+
+    /* Requirement 6: 3 Key Sentences to Learn */
+    .sentence-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .sentence-item {
+      background: var(--bg-warm-tint);
+      border: 1px solid var(--border-delicate);
+      border-radius: 10px;
+      padding: 1.15rem 1.25rem;
+    }
+
+    .sentence-source {
+      direction: ltr;
+      text-align: left;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.04rem;
+      font-weight: 600;
+      line-height: 1.55;
+      color: var(--text-secondary);
+      margin-bottom: 0.65rem;
+      padding-bottom: 0.55rem;
+      border-bottom: 1px dashed var(--border-strong);
+    }
+
+    .sentence-uyghur {
+      direction: rtl;
+      text-align: justify;
+      text-justify: inter-word;
+      font-weight: 600;
+      color: var(--text-ink);
+      line-height: 2.08;
+      margin-bottom: 0.45rem;
+    }
+
+    .sentence-note {
+      font-size: 0.84rem;
+      color: var(--accent-gold);
+      line-height: 1.85;
+      padding-top: 0.35rem;
+      border-top: 1px solid var(--border-delicate);
+    }
+
+    /* Requirement 8: Political & Economic Key Points */
+    .insights-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.15rem;
+    }
+
+    @media (min-width: 640px) {
+      .insights-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .insight-box {
+      background: var(--bg-warm-tint);
+      border: 1px solid var(--border-delicate);
+      border-radius: 10px;
+      padding: 1.15rem 1.25rem;
+    }
+
+    .insight-box h3 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 1px solid var(--border-delicate);
+      color: var(--text-ink);
+    }
+
+    .insight-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .insight-list li {
+      direction: rtl;
+      text-align: justify;
+      text-justify: inter-word;
+      font-size: 0.94rem;
+      line-height: 2.02;
+      color: var(--text-body);
+      position: relative;
+      padding-right: 1.1rem;
+    }
+
+    .insight-list li::before {
+      content: "◆";
+      position: absolute;
+      right: 0;
+      color: var(--accent-gold);
+      font-size: 0.65rem;
+      top: 0.1rem;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-delicate);
+    }
+  </style>
+</head>
+<body>
+  <div class="reading-progress-track">
+    <div class="reading-progress-bar" id="readingProgressBar"></div>
+  </div>
+
+  <!-- Requirement 5: Compact Day/Night Toggle & Font Scaler at Top -->
+  <header class="top-utility-bar">
+    <div class="brand-mark">
+      <span class="brand-ornament">❖</span>
+      <span>مۇخلىس تەرجىمە قورالى</span>
+      <span>·</span>
+      <span>Türkçe (تۈركچە) → ئۇيغۇرچە</span>
+    </div>
+    <div class="utility-controls">
+      <button type="button" class="font-btn" onclick="adjustFontSize(1)" title="خەتنى چوڭايتىش">A+</button>
+      <button type="button" class="font-btn" onclick="adjustFontSize(-1)" title="خەتنى كىچىكلىتىش">A-</button>
+      <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
+        <span id="themeIcon">☀️</span>
+        <span id="themeLabel">كۈندۈزلۈك ھالەت</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="reader-container">
+    <header class="masthead-card">
+      <div class="masthead-kicker">
+        <span>❖</span>
+        <span>ئۇيغۇر ئەدەبىي تىلى تەرجىمە مەجمۇئەسى</span>
+        <span>❖</span>
+      </div>
+      <h1 class="article-title">ئوتتۇرا كارىدور ۋە ياۋرو-ئاسىيانىڭ يېڭى سىياسىي ئىقتىسادىي ۋەزىيىتى</h1>
+      <div class="original-title">Orta Koridor ve Avrasya'nın Yeni Ekonomi Politiği</div>
+    </header>
+
+    <article class="article-body" aria-label="ماقالىنىڭ ئۇيغۇرچە ئەدەبىي تەرجىمىسى">
+      <p>يېقىنقى يىللاردىن بۇيان دۇنيا ئەشيا ئوبوروتى لىنىيەلىرىدە يۈز بەرگەن ئۈزۈلۈشلەر كاسپىي دېڭىزى ئارقىلىق ئۆتىدىغان «ئوتتۇرا كارىدور» (كاسپىي دېڭىزى ھالقىغان خەلقئارا قاتناش لىنىيەسى)نى شەرق بىلەن غەرب ئوتتۇرىسىدىكى سودىنىڭ ئەڭ ئىستراتېگىيەلىك جان تومۇرلىرىنىڭ بىرىگە ئايلاندۇردى. ئەنئەنىۋى دېڭىز يوللىرىدىكى كېچىكىشلەر ۋە جۇغراپىيەلىك سىياسىي جىددىيچىلىكلەر تۆمۈريول ھەمدە پورت ئۇل ئەسلىھەلىرىگە قىلىنىدىغان مەبلەغ سېلىنمىسىنى تېزلەتتى.</p>
+      <p>مەزكۇر رايوندىكى دۆلەتلەر پەقەت ئۆتكۈزۈش ھەققىلا ئالىدىغان پاسسىپ قاتناشقۇچىلار بولۇش ھالىتىدىن قۇتۇلۇپ، ئېنېرگىيە بۇرۇلۇشى، سىيرەك يەر ئېلېمېنتلىرىنى پىششىقلاپ ئىشلەش ۋە رايون خاراكتېرلىك ئىشلەپچىقىرىش مەركەزلىرىنى قۇرۇپ چىقىش يۆنىلىشىدە ئورتاق سىياسەتلەرنى تۈزۈپ چىقماقتا. تاموژنا رەسمىيەتلىرىنىڭ رەقەملەشتۈرۈلۈشى ۋە بىرلىككە كەلگەن باج نىسبىتى كېلىشىملىرى رايون ئىچىدىكى سودا ئومۇمىي سوممىسىنى يېقىنقى ئۈچ يىل ئىچىدە بىر قاتلىدى.</p>
+      <p>قانداقلا بولمىسۇن، بۇ ئىقتىسادىي يوشۇرۇن كۈچنىڭ ئۇزاق مۇددەتلىك گۈللىنىشكە ئايلىنىشى مەبلەغ يۈرۈشتۈرۈش تەننەرخىنىڭ تۆۋەنلىتىلىشىگە ۋە قانۇنىي مۇھىتنىڭ مۇقىملىقىنى كۈچەيتىشكە باغلىقتۇر. خەلقئارا تەرەققىيات بانكىلىرى بىلەن يەرلىك كاپىتال بازارلىرىنىڭ ماس قەدەمدە ھەمكارلىشىشى ياۋرو-ئاسىيا مەركىزىي بەلبېغىدا يېڭى بىر ئىقتىسادىي تەڭپۇڭلۇقنى بەرپا قىلىدۇ.</p>
+    </article>
+
+    <div class="ornamental-divider" aria-hidden="true">❖ ─── ❖ ─── ❖</div>
+
+    <section class="analysis-section" aria-label="ماقالىنىڭ خۇلاسىسى">
+      <h2 class="section-heading">
+        <span>ماقالىنىڭ ئىخچام خۇلاسىسى</span>
+        <span class="section-tag">بىر ئابزاسلىق جەۋھەر مەزمۇن</span>
+      </h2>
+      <p class="summary-paragraph">بۇ ماقالىدە خەلقئارا ئەشيا ئوبوروتىدىكى ئۆزگىرىشلەر تۈپەيلىدىن كاسپىي دېڭىزى ئارقىلىق ئۆتىدىغان «ئوتتۇرا كارىدور»نىڭ شەرق بىلەن غەرب سودىسىدىكى يادرولۇق قاتناش تومۇرىغا ئايلانغانلىقى بايان قىلىنغان بولۇپ، رايون دۆلەتلىرىنىڭ نوقۇل يول ئۆتكىلى بولۇشتىن ھالقىپ، تاموژنىنى رەقەملەشتۈرۈش، ئېنېرگىيە ۋە كان بايلىقلىرىنى پىششىقلاپ ئىشلەش ھەمدە قانۇنىي-پۇل مۇئامىلە تۈزۈلمىسىنى مۇكەممەللەشتۈرۈش ئارقىلىق ياۋرو-ئاسىيادا مۇستەقىل ئىقتىسادىي تەڭپۇڭلۇق شەكىللەندۈرۈۋاتقانلىقى خۇلاسىلەنگەن.</p>
+    </section>
+
+    <section class="analysis-section" aria-label="ئۆگىنىشكە تېگىشلىك 3 مۇھىم جۈملە">
+      <h2 class="section-heading">
+        <span>ئۆگىنىشكە تېگىشلىك 3 مۇھىم جۈملە</span>
+        <span class="section-tag">سېلىشتۇرما ۋە ئىبارە شەرھىسى</span>
+      </h2>
+      <div class="sentence-list">
+        
+        <div class="sentence-item">
+          <div class="sentence-source">1. Küresel lojistik hatlarında yaşanan kırılmalar, Orta Koridor'u Doğu ile Batı arasındaki ticaretin en stratejik damarlarından biri haline getirdi.</div>
+          <div class="sentence-uyghur">دۇنيا ئەشيا ئوبوروتى لىنىيەلىرىدە يۈز بەرگەن ئۈزۈلۈشلەر ئوتتۇرا كارىدورنى شەرق بىلەن غەرب ئوتتۇرىسىدىكى سودىنىڭ ئەڭ ئىستراتېگىيەلىك جان تومۇرلىرىنىڭ بىرىگە ئايلاندۇردى.</div>
+          <div class="sentence-note">ئىزاھات: lojistik hatları (ئەشيا ئوبوروتى لىنىيەلىرى)، stratejik damar (ئىستراتېگىيەلىك جان تومۇر)</div>
+        </div>
+
+        <div class="sentence-item">
+          <div class="sentence-source">2. Gümrük prosedürlerinin dijitalleştirilmesi ve ortak tarife anlaşmaları, bölgesel ticaret hacmini iki katına çıkardı.</div>
+          <div class="sentence-uyghur">تاموژنا رەسمىيەتلىرىنىڭ رەقەملەشتۈرۈلۈشى ۋە بىرلىككە كەلگەن باج نىسبىتى كېلىشىملىرى رايون خاراكتېرلىك سودا ھەجمىنى بىر قاتلىدى.</div>
+          <div class="sentence-note">ئىزاھات: gümrük prosedürleri (تاموژنا رەسمىيەتلىرى)، ticaret hacmi (سودا ھەجمى / سوممىسى)</div>
+        </div>
+
+        <div class="sentence-item">
+          <div class="sentence-source">3. Ekonomik potansiyelin kalıcı refaha dönüşmesi, hukuki öngörülebilirliğin güçlendirilmesine bağlıdır.</div>
+          <div class="sentence-uyghur">ئىقتىسادىي يوشۇرۇن كۈچنىڭ ئۇزاق مۇددەتلىك باياشاتلىققا ئايلىنىشى قانۇنىي مۆلچەرلىنىشچانلىقنىڭ (مۇقىملىقنىڭ) كۈچەيتىلىشىگە باغلىقتۇر.</div>
+          <div class="sentence-note">ئىزاھات: kalıcı refah (ئۇزاق مۇددەتلىك باياشاتلىق / گۈللىنىش)، hukuki öngörülebilirlik (قانۇنىي مۇقىملىق ۋە ئالدىن مۆلچەرلىنىشچانلىق)</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="analysis-section" aria-label="سىياسىي ۋە ئىقتىسادىي مۇھىم نۇقتىلار">
+      <h2 class="section-heading">
+        <span>سىياسىي ۋە ئىقتىسادىي مۇھىم نۇقتىلار</span>
+        <span class="section-tag">ماقالە تەھلىلى</span>
+      </h2>
+      <div class="insights-grid">
+        <div class="insight-box">
+          <h3>سىياسىي مۇھىم نۇقتىلار</h3>
+          <ul class="insight-list">
+            <li>جۇغراپىيەلىك سىياسىي توقۇنۇشلار ئەنئەنىۋى دېڭىز ۋە قۇرۇقلۇق يوللىرىنىڭ بىخەتەرلىكىگە تەسىر يەتكۈزۈپ، ئوتتۇرا ئاسىيا ۋە كاسپىي دېڭىزى لىنىيەسىنىڭ خەلقئارا سىياسەتتىكى سالماق نىسبىتىنى ئاشۇردى.</li>
+            <li>رايون دۆلەتلىرى تاشقى كۈچلەرگە تايىنىپلا قالماستىن، ئۆزئارا تاموژنا ۋە قاتناش كېلىشىملىرى ئارقىلىق رايون خاراكتېرلىك سىياسىي ھەمكارلىق مېخانىزمىنى كۈچەيتمەكتە.</li>
+          </ul>
+        </div>
+        <div class="insight-box">
+          <h3>ئىقتىسادىي مۇھىم نۇقتىلار</h3>
+          <ul class="insight-list">
+            <li>تۆمۈريول، پورت ۋە رەقەملىك تاموژنا سىستېمىسىغا قىلىنغان مەبلەغ سېلىنمىسى رايونلار ئارا سودا ھەجمىنى قىسقا مۇددەت ئىچىدە ھەسسىلەپ ئاشۇردى.</li>
+            <li>خام ئەشيا ۋە سىيرەك يەر مەدەنلىرىنى بىۋاسىتە چىقىرىپ سېتىشنىڭ ئورنىغا، يەرلىكتە پىششىقلاپ ئىشلەش سانائىتىنى قۇرۇش قوشۇلما قىممەت يارىتىشنىڭ يادروسىغا ئايلاندى.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer-note">
+      ❖ مۇخلىس تەرجىمە قورالى تەرىپىدىن ئۇيغۇر ئەدەبىي تىلى ئۆلچىمىدە نەپىس بېزەپ تەييارلاندى ❖
+    </footer>
+  </main>
+
+  <script>
+    var currentFontSize = 19;
+    function adjustFontSize(delta) {
+      currentFontSize = Math.min(26, Math.max(15, currentFontSize + delta));
+      document.documentElement.style.setProperty('--reader-font-size', currentFontSize + 'px');
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      var icon = document.getElementById('themeIcon');
+      var label = document.getElementById('themeLabel');
+      if (theme === 'night') {
+        icon.textContent = '☀️';
+        label.textContent = 'كۈندۈزلۈك ھالەت';
+      } else {
+        icon.textContent = '🌙';
+        label.textContent = 'كېچىلىك ھالەت';
+      }
+      try { localStorage.setItem('muxlis_reader_theme', theme); } catch (e) {}
+    }
+
+    function toggleTheme() {
+      var current = document.documentElement.getAttribute('data-theme') || 'day';
+      applyTheme(current === 'day' ? 'night' : 'day');
+    }
+
+    window.addEventListener('scroll', function () {
+      var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      var scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      var bar = document.getElementById('readingProgressBar');
+      if (bar) bar.style.width = scrolled + '%';
+    });
+  </script>
+</body>
+</html>
